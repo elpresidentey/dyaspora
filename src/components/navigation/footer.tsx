@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Globe, Mail, MessageCircle } from "lucide-react";
+import { Logo } from "@/components/brand/logo";
 import { siteConfig } from "@/config/site";
 
 const footerLinks = [
@@ -25,7 +26,7 @@ export function Footer() {
           </div>
         </div>
         <div className="relative flex flex-col gap-6 pt-7 text-xs text-white/45 md:flex-row md:items-center md:justify-between">
-          <Link href="/" className="flex items-center gap-3 text-white"><span className="grid h-9 w-9 place-items-center rounded-full bg-gold font-serif font-bold">D</span><span className="font-serif text-lg font-bold">{siteConfig.name}</span></Link>
+          <Logo variant="light" />
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3"><span>© {new Date().getFullYear()} {siteConfig.name}</span><Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link><Link href="/terms" className="transition-colors hover:text-white">Terms</Link></div>
           <div className="flex items-center gap-2"><span>Follow the journey</span><Link href={siteConfig.links.twitter} aria-label="Dyaspora on Twitter" className="transition-colors hover:text-gold"><MessageCircle className="h-4 w-4" /></Link><Link href="mailto:hello@dyaspora.com" aria-label="Email Dyaspora" className="transition-colors hover:text-gold"><Mail className="h-4 w-4" /></Link><Link href={siteConfig.links.github} aria-label="Dyaspora online" className="transition-colors hover:text-gold"><Globe className="h-4 w-4" /></Link></div>
         </div>

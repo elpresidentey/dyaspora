@@ -3,6 +3,7 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, HeartPulse, House, Menu, Plane, ShieldCheck } from "lucide-react";
+import { Logo } from "@/components/brand/logo";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 
@@ -28,10 +29,7 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-sm border-l border-border bg-background p-6">
         <nav className="flex flex-col gap-8">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-brand text-white text-sm font-serif font-bold">D</span>
-            <span className="font-serif text-lg font-bold tracking-[-.03em] text-foreground">{siteConfig.name}</span>
-          </Link>
+          <Logo />
           <div className="flex flex-col gap-1">
             {navItems.map(({ label, href, icon: Icon }) => (
               <Link

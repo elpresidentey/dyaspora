@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/brand/logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard } from "lucide-react";
@@ -91,12 +92,7 @@ export function Header() {
     }`}>
       <div className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between px-6 sm:px-10 lg:px-16">
         <div className="flex items-center gap-10">
-          <Link href="/" className="flex items-center gap-3" aria-label={`${siteConfig.name} home`}>
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-brand text-white shadow-sm transition-transform duration-300 hover:rotate-[-8deg]">
-              <span className="font-serif text-sm font-bold">D</span>
-            </span>
-            <span className="font-serif text-lg font-bold tracking-[-.03em] text-foreground">{siteConfig.name}</span>
-          </Link>
+          <Logo />
           <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary navigation">
             {navItems.map(({ label, href, icon: Icon }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
