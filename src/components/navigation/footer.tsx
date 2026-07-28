@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Globe, Heart, Mail, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Globe, Mail, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
 const footerLinks = [
@@ -29,7 +29,10 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3"><span>© {new Date().getFullYear()} {siteConfig.name}</span><Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link><Link href="/terms" className="transition-colors hover:text-white">Terms</Link></div>
           <div className="flex items-center gap-2"><span>Follow the journey</span><Link href={siteConfig.links.twitter} aria-label="Dyaspora on Twitter" className="transition-colors hover:text-gold"><MessageCircle className="h-4 w-4" /></Link><Link href="mailto:hello@dyaspora.com" aria-label="Email Dyaspora" className="transition-colors hover:text-gold"><Mail className="h-4 w-4" /></Link><Link href={siteConfig.links.github} aria-label="Dyaspora online" className="transition-colors hover:text-gold"><Globe className="h-4 w-4" /></Link></div>
         </div>
-        <p className="relative mt-8 flex items-center gap-1 text-[11px] text-white/30">Made with <Heart className="h-3 w-3 fill-gold text-gold" /> for the diaspora.</p>
+        <div className="relative mt-8 flex flex-col items-start gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[11px] leading-relaxed text-white/35">Built by <span className="font-medium text-white/60">IEL Web Services</span> <span className="text-white/20">—</span> for the diasporan.</p>
+          <p className="text-[11px] text-white/25">crafted with purpose <span className="text-white/15">·</span> rooted in culture</p>
+        </div>
       </div>
     </footer>
   );
