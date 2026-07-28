@@ -106,7 +106,8 @@ function generateDuration(depIata: string, arrIata: string): number {
   const key = `${dr}-${ar}`;
   const revKey = `${ar}-${dr}`;
   const [min, max] = durationRanges[key] || durationRanges[revKey] || durationRanges.OTHER;
-  return Math.round(Math.random() * (max - min) + min);
+  const raw = Math.random() * (max - min) + min;
+  return Math.round(raw / 5) * 5;
 }
 
 function generateCabinClass(): string {
@@ -211,10 +212,10 @@ export async function GET(request: NextRequest) {
 
     // Fall back to dynamically generated mock flights
     const depIataName = depIata
-      ? `${Object.entries(cityToIata).find(([, v]) => v === depIata)?.[0] || ""} (${depIata})`
+      ? `${(Object.entries(cityToIata).find(([, v]) => v === depIata)?.[0] || depIata).replace(/^./, c => c.toUpperCase())} (${depIata})`
       : origin;
     const arrIataName = arrIata
-      ? `${Object.entries(cityToIata).find(([, v]) => v === arrIata)?.[0] || ""} (${arrIata})`
+      ? `${(Object.entries(cityToIata).find(([, v]) => v === arrIata)?.[0] || arrIata).replace(/^./, c => c.toUpperCase())} (${arrIata})`
       : destination;
 
     const timesOfDay = [
@@ -242,7 +243,7 @@ export async function GET(request: NextRequest) {
 
           const baseDuration = depIata && arrIata
             ? generateDuration(depIata, arrIata)
-            : 120 + Math.floor(Math.random() * 240);
+            : 90 + Math.floor(Math.random() * 450);
           const duration = Math.round(baseDuration / 5) * 5;
 
           const arrDate = new Date(depDate.getTime() + duration * 60000);

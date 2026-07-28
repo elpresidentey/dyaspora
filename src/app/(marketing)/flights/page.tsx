@@ -86,6 +86,9 @@ export default function FlightsPage() {
     const h = Math.floor(min / 60); const m = min % 60;
     return `${h}h${m > 0 ? ` ${m}m` : ""}`;
   }
+  function cap(str: string) {
+    return str.replace(/\b\w/g, c => c.toUpperCase());
+  }
 
   return (
     <main>
@@ -174,34 +177,21 @@ export default function FlightsPage() {
                     </div>
 
                     {/* Route */}
-                    <div className="flex flex-1 flex-col gap-2">
-                      <div className="text-xs font-medium text-muted-foreground">
-                        {depCode} <span className="text-gold">→</span> {arrCode}
+                    <div className="flex flex-1 flex-col gap-1.5 min-w-0">
+                      <div className="font-semibold text-foreground truncate">
+                        {cap(depCity)} ({depCode}) <span className="text-gold mx-1">→</span> {cap(arrCity)} ({arrCode})
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-center min-w-[80px]">
-                          <div className="text-xl font-bold tracking-tight">{formatTime(flight.departureTime)}</div>
-                          <div className="text-xs font-medium text-foreground">{depCity}</div>
-                        </div>
-
-                        <div className="flex flex-1 flex-col items-center gap-1 px-2">
-                          <span className="text-[11px] font-medium text-muted-foreground">{formatDuration(flight.duration)}</span>
-                          <div className="relative flex w-full items-center">
-                            <div className={`h-px flex-1 ${stops === 0 ? "bg-gold/50" : "bg-border"}`} />
-                            <div className={`grid h-6 w-6 place-items-center rounded-full border-2 ${stops === 0 ? "border-gold/60 bg-gold/10" : "border-border bg-background"}`}>
-                              <Plane className={`h-3 w-3 ${stops === 0 ? "text-gold" : "text-muted-foreground"}`} />
-                            </div>
-                            <div className={`h-px flex-1 ${stops === 0 ? "bg-gold/50" : "bg-border"}`} />
-                          </div>
-                          <span className={`text-[11px] font-semibold ${stops === 0 ? "text-gold" : "text-muted-foreground"}`}>
+                      <div className="flex items-center gap-2">
+                        <div className="text-xl font-bold tracking-tight shrink-0">{formatTime(flight.departureTime)}</div>
+                        <div className="flex flex-1 items-center gap-1.5 min-w-0 px-1">
+                          <div className="h-px flex-1 bg-border" />
+                          <span className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">{formatDuration(flight.duration)}</span>
+                          <div className={`h-px flex-1 ${stops === 0 ? "bg-gold/50" : "bg-border"}`} />
+                          <span className={`text-[11px] font-semibold whitespace-nowrap ${stops === 0 ? "text-gold" : "text-muted-foreground"}`}>
                             {stops === 0 ? "Nonstop" : `${stops} stop${stops > 1 ? "s" : ""}`}
                           </span>
                         </div>
-
-                        <div className="text-center min-w-[80px]">
-                          <div className="text-xl font-bold tracking-tight">{formatTime(flight.arrivalTime)}</div>
-                          <div className="text-xs font-medium text-foreground">{arrCity}</div>
-                        </div>
+                        <div className="text-xl font-bold tracking-tight shrink-0">{formatTime(flight.arrivalTime)}</div>
                       </div>
                     </div>
 
