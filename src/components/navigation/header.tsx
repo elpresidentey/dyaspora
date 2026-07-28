@@ -97,18 +97,20 @@ export function Header() {
             {navItems.map(({ label, href, icon: Icon }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
               return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    isActive
-                      ? "bg-brand/10 text-brand"
-                      : "text-muted-foreground hover:bg-brand/5 hover:text-foreground"
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  {label}
-                </Link>
+                <div className="group/link">
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-brand/10 text-brand"
+                        : "text-muted-foreground hover:bg-brand/5 hover:text-foreground"
+                    }`}
+                  >
+                    <Icon className={`h-3.5 w-3.5 transition-transform duration-200 ${isActive ? "" : "group-hover/link:scale-110"}`} />
+                    <span className="relative">{label}<span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-brand/40 transition-transform duration-300 group-hover/link:scale-x-100" /></span>
+                  </Link>
+                </div>
               );
             })}
             <MoreDropdown />
