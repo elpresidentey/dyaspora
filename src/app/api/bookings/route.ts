@@ -117,7 +117,6 @@ export async function POST(request: NextRequest) {
         data: {
           bookingId: booking.id,
           hotelId: validatedData.itemId,
-          roomTypeId: validatedData.roomTypeId,
           checkIn: new Date(validatedData.checkIn),
           checkOut: new Date(validatedData.checkOut),
           rooms: validatedData.rooms || 1,

@@ -84,7 +84,7 @@ function HotelBookingPage() {
         body: JSON.stringify({
           userId: user?.id || "demo-user", type: "hotel", itemId: id, total, currency: "USD",
           checkIn, checkOut, guests: Number(guests), rooms: Number(rooms),
-          roomTypeId: selectedRoomType?.id, roomTypeName: selectedRoomType?.name,
+          roomTypeName: selectedRoomType?.name,
           roomTypePrice: selectedRoomType?.price,
         }),
       });
