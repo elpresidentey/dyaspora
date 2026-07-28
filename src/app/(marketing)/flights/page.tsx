@@ -162,62 +162,64 @@ export default function FlightsPage() {
                 const depCity = flight.origin.replace(/\s*\([^)]*\)\s*$/, "").trim();
                 const arrCity = flight.destination.replace(/\s*\([^)]*\)\s*$/, "").trim();
                 return (
-                <div key={flight.id} className="group rounded-xl border bg-background transition-all hover:border-gold/40 hover:shadow-md">
-                  {/* Top: Airline, Route, Price */}
-                  <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:gap-6">
+                <div key={flight.id} className="rounded-xl border bg-background transition-all hover:border-gold/40 hover:shadow-sm">
+                  <div className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:px-5 md:py-4">
                     {/* Airline */}
-                    <div className="flex items-center gap-3 md:w-44 md:shrink-0">
-                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand/10 text-[11px] font-bold text-brand ring-1 ring-brand/15">
+                    <div className="flex items-center gap-3 md:w-40 md:shrink-0 md:pr-4 md:border-r md:border-border">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/10 text-[10px] font-bold text-brand ring-1 ring-brand/15">
                         {flight.airline.split(" ").map(w => w[0]).slice(0, 2).join("")}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold">{flight.airline}</p>
-                        <p className="text-xs text-muted-foreground">{flight.flightNumber}</p>
+                        <p className="text-xs font-semibold leading-tight">{flight.airline}</p>
+                        <p className="text-[10px] text-muted-foreground">{flight.flightNumber}</p>
                       </div>
                     </div>
 
                     {/* Route */}
-                    <div className="flex flex-1 flex-col gap-1.5 min-w-0">
-                      <div className="font-semibold text-foreground truncate">
-                        {cap(depCity)} ({depCode}) <span className="text-gold mx-1">→</span> {cap(arrCity)} ({arrCode})
+                    <div className="flex flex-1 items-center gap-3 md:gap-4">
+                      <div className="text-right min-w-0 shrink-0">
+                        <div className="text-base font-bold md:text-lg leading-tight">{formatTime(flight.departureTime)}</div>
+                        <div className="text-[11px] text-muted-foreground truncate">{depCode}</div>
+                        <div className="text-[10px] text-muted-foreground truncate max-w-[100px]">{cap(depCity)}</div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <div className="text-xl font-bold tracking-tight shrink-0">{formatTime(flight.departureTime)}</div>
-                        <div className="flex flex-1 items-center gap-1.5 min-w-0 px-1">
+
+                      <div className="flex flex-1 flex-col items-center gap-0.5 min-w-0">
+                        <span className="text-[10px] font-medium text-muted-foreground">{formatDuration(flight.duration)}</span>
+                        <div className="flex w-full items-center gap-1">
                           <div className="h-px flex-1 bg-border" />
-                          <span className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">{formatDuration(flight.duration)}</span>
-                          <div className={`h-px flex-1 ${stops === 0 ? "bg-gold/50" : "bg-border"}`} />
-                          <span className={`text-[11px] font-semibold whitespace-nowrap ${stops === 0 ? "text-gold" : "text-muted-foreground"}`}>
+                          <span className={`text-[10px] font-semibold whitespace-nowrap ${stops === 0 ? "text-gold" : "text-muted-foreground"}`}>
                             {stops === 0 ? "Nonstop" : `${stops} stop${stops > 1 ? "s" : ""}`}
                           </span>
                         </div>
-                        <div className="text-xl font-bold tracking-tight shrink-0">{formatTime(flight.arrivalTime)}</div>
+                      </div>
+
+                      <div className="text-left min-w-0 shrink-0">
+                        <div className="text-base font-bold md:text-lg leading-tight">{formatTime(flight.arrivalTime)}</div>
+                        <div className="text-[11px] text-muted-foreground truncate">{arrCode}</div>
+                        <div className="text-[10px] text-muted-foreground truncate max-w-[100px]">{cap(arrCity)}</div>
                       </div>
                     </div>
 
                     {/* Price + CTA */}
-                    <div className="flex items-center justify-between gap-3 md:flex-col md:items-end md:w-40 md:shrink-0 md:border-l md:pl-5 md:border-border md:justify-start">
-                      <div className="md:w-full">
-                        <div className="text-2xl font-bold text-gold md:text-right">${flight.price}</div>
-                        <div className="text-[11px] text-muted-foreground md:text-right">per person</div>
+                    <div className="flex items-center justify-between gap-3 md:flex-col md:items-end md:w-32 md:shrink-0 md:border-l md:border-border md:pl-4">
+                      <div>
+                        <div className="text-lg font-bold text-gold md:text-xl md:text-right">${flight.price}</div>
+                        <div className="text-[10px] text-muted-foreground md:text-right">per person</div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Link href={`/bookings/flight/${flight.id}?airline=${encodeURIComponent(flight.airline)}&flightNumber=${encodeURIComponent(flight.flightNumber)}&origin=${encodeURIComponent(flight.origin)}&destination=${encodeURIComponent(flight.destination)}&departureTime=${encodeURIComponent(flight.departureTime)}&arrivalTime=${encodeURIComponent(flight.arrivalTime)}&duration=${flight.duration}&price=${flight.price}&cabinClass=${encodeURIComponent(flight.cabinClass)}&availableSeats=${flight.availableSeats}`} className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gold px-4 text-xs font-semibold text-white transition-all hover:bg-[#b99557]">Book <ArrowUpRight className="h-3 w-3" /></Link>
-                        {user && <button onClick={() => handleToggleSave(flight)} className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors ${savedFlights.has(flight.id) ? "border-gold bg-gold/10 text-gold" : "border-border text-muted-foreground hover:border-gold/40 hover:text-gold"}`}><Bookmark className={`h-3.5 w-3.5 ${savedFlights.has(flight.id) ? "fill-gold" : ""}`} /></button>}
+                      <div className="flex items-center gap-1.5">
+                        <Link href={`/bookings/flight/${flight.id}?airline=${encodeURIComponent(flight.airline)}&flightNumber=${encodeURIComponent(flight.flightNumber)}&origin=${encodeURIComponent(flight.origin)}&destination=${encodeURIComponent(flight.destination)}&departureTime=${encodeURIComponent(flight.departureTime)}&arrivalTime=${encodeURIComponent(flight.arrivalTime)}&duration=${flight.duration}&price=${flight.price}&cabinClass=${encodeURIComponent(flight.cabinClass)}&availableSeats=${flight.availableSeats}`} className="inline-flex h-8 items-center gap-1 rounded-lg bg-gold px-3 text-[11px] font-semibold text-white transition-all hover:bg-[#b99557]">Book <ArrowUpRight className="h-3 w-3" /></Link>
+                        {user && <button onClick={() => handleToggleSave(flight)} className={`grid h-8 w-8 place-items-center rounded-lg border transition-colors ${savedFlights.has(flight.id) ? "border-gold bg-gold/10 text-gold" : "border-border text-muted-foreground hover:border-gold/40 hover:text-gold"}`}><Bookmark className={`h-3.5 w-3.5 ${savedFlights.has(flight.id) ? "fill-gold" : ""}`} /></button>}
                       </div>
                     </div>
                   </div>
 
                   {/* Bottom: date, cabin, seats */}
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t bg-muted/30 px-5 py-2.5 text-[11px] text-muted-foreground">
-                    <span className="flex items-center gap-1.5">
-                      <CalendarDays className="h-3 w-3" />
-                      {depDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 border-t px-5 py-2 text-[10px] text-muted-foreground bg-muted/20">
+                    <span className="flex items-center gap-1"><CalendarDays className="h-3 w-3" />{depDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</span>
                     <span className="text-border">|</span>
                     <span className="capitalize">{flight.cabinClass}</span>
                     <span className="text-border">|</span>
-                    <span>{flight.availableSeats} seat{flight.availableSeats !== 1 ? "s" : ""} at ${flight.price}/ea</span>
+                    <span>{flight.availableSeats} seat{flight.availableSeats !== 1 ? "s" : ""} left</span>
                   </div>
                 </div>
                 );
