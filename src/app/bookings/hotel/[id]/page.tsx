@@ -44,12 +44,21 @@ function HotelBookingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [hotel, setHotel] = useState<Hotel | null>(null);
-  const [checkIn, setCheckIn] = useState(searchParams.get("checkIn") || "");
-  const [checkOut, setCheckOut] = useState(searchParams.get("checkOut") || "");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  const [guests, setGuests] = useState(searchParams.get("guests") || "2");
+  const [guests, setGuests] = useState("1");
   const [rooms, setRooms] = useState("1");
+
+  useEffect(() => {
+    const ci = searchParams.get("checkIn");
+    const co = searchParams.get("checkOut");
+    const g = searchParams.get("guests");
+    if (ci) setCheckIn(ci);
+    if (co) setCheckOut(co);
+    if (g) setGuests(g);
+  }, [searchParams]);
   const [selectedRoomType, setSelectedRoomType] = useState<RoomType | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
