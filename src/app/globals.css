@@ -80,6 +80,34 @@
   --ivory: #faf8f5;
 }
 
+.dark {
+  --background: #0f1419;
+  --foreground: #f0f0ed;
+  --card: #1a212a;
+  --card-foreground: #f0f0ed;
+  --popover: #1a212a;
+  --popover-foreground: #f0f0ed;
+  --primary: #4a7fb5;
+  --primary-foreground: #ffffff;
+  --secondary: #1a212a;
+  --secondary-foreground: #f0f0ed;
+  --muted: #232b36;
+  --muted-foreground: #9ca3af;
+  --accent: #2a3340;
+  --accent-foreground: #4a7fb5;
+  --destructive: #f87171;
+  --destructive-foreground: #ffffff;
+  --border: #2a3340;
+  --input: #2a3340;
+  --ring: #4a7fb5;
+  --sidebar: #141b24;
+  --sidebar-foreground: #f0f0ed;
+  --gold: #c9a84c;
+  --brand: #4a7fb5;
+  --brand-light: #1e2d42;
+  --ivory: #141b24;
+}
+
 @layer base {
   * {
     @apply border-border;
