@@ -3,7 +3,7 @@
 import { Logo } from "@/components/brand/logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard } from "lucide-react";
+import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard, CloudSun } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import { useUser } from "@/components/auth/auth-context";
@@ -19,6 +19,7 @@ const navItems = [
 ];
 
 const moreItems = [
+  { label: "Weather", href: "/weather", icon: CloudSun },
   { label: "Currency Converter", href: "/resources/currency", icon: Globe },
   { label: "Safety", href: "/safety", icon: ShieldCheck },
   { label: "Health Advice", href: "/resources/health", icon: HeartPulse },

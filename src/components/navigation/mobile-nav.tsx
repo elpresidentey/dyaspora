@@ -2,7 +2,7 @@
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, HeartPulse, House, Menu, Plane, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, HeartPulse, House, Menu, Plane, ShieldCheck, CloudSun } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
@@ -45,6 +45,7 @@ export function MobileNav() {
           <div className="flex flex-col gap-1 border-t border-border pt-5">
             <span className="px-3 pb-1 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Resources</span>
             {[
+              { label: "Weather", href: "/weather", icon: CloudSun },
               { label: "Currency Converter", href: "/resources/currency", icon: Globe },
               { label: "Safety", href: "/safety", icon: ShieldCheck },
               { label: "Health Advice", href: "/resources/health", icon: HeartPulse },

@@ -7,6 +7,7 @@ import { restaurants } from "@/data/restaurants";
 import { tours } from "@/data/tours";
 import { transport } from "@/data/transport";
 import { events } from "@/data/events";
+import { CityWeatherWidget } from "@/components/weather/city-weather-widget";
 
 export function generateStaticParams() {
   return destinations.map((d) => ({ slug: d.slug }));
@@ -108,6 +109,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
           <aside className="lg:border-l lg:border-border lg:pl-8">
             <div className="sticky top-28 space-y-8">
+              <CityWeatherWidget slug={slug} />
               <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Quick links</p></div>
               <div className="space-y-2">
                 <Link href={`/accommodation?city=${city.city}`} className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"><Building2 className="h-4 w-4 text-gold" /> Stays in {city.city}</Link>
