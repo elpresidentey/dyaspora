@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/navigation/header";
 import { AuthProvider } from "@/components/auth/auth-context";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -56,6 +57,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <ScrollProgress />
         <Providers>
           <TooltipProvider>
             <AuthProvider>

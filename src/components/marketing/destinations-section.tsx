@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { MapPin, ArrowRight } from "lucide-react";
 import { destinations } from "@/data/destinations";
@@ -11,11 +13,12 @@ const featured = destinations.filter((d) =>
 export function DestinationsSection() {
   return (
     <section className="py-28 md:py-36 bg-secondary relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-      <div className="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl animate-float-delayed" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-1/3 right-1/4 w-2 h-2 rounded-full bg-gold/20 animate-float" style={{ animationDelay: "1.5s" }} />
 
       <div className="container relative z-10">
-        <AnimateIn animation="fade-in-up">
+        <AnimateIn animation="blur-in" duration={800}>
           <div className="flex items-end justify-between gap-8">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 mb-6">
@@ -41,27 +44,29 @@ export function DestinationsSection() {
         <AnimateInStagger>
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.slice(0, 3).map((destination) => (
-              <DestinationCard
-                key={destination.slug}
-                href={`/cities/${destination.slug}`}
-                image={destination.image!}
-                eyebrow={destination.country}
-                title={destination.city}
-                description={destination.tag}
-              />
+              <div key={destination.slug} className="animate-reveal-clip" style={{ animationDelay: "0ms" }}>
+                <DestinationCard
+                  href={`/cities/${destination.slug}`}
+                  image={destination.image!}
+                  eyebrow={destination.country}
+                  title={destination.city}
+                  description={destination.tag}
+                />
+              </div>
             ))}
           </div>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.slice(3).map((destination) => (
-              <DestinationCard
-                key={destination.slug}
-                href={`/cities/${destination.slug}`}
-                image={destination.image!}
-                eyebrow={destination.country}
-                title={destination.city}
-                description={destination.tag}
-              />
+              <div key={destination.slug} className="animate-reveal-clip" style={{ animationDelay: "150ms" }}>
+                <DestinationCard
+                  href={`/cities/${destination.slug}`}
+                  image={destination.image!}
+                  eyebrow={destination.country}
+                  title={destination.city}
+                  description={destination.tag}
+                />
+              </div>
             ))}
           </div>
 

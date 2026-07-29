@@ -9,7 +9,7 @@ import {
   MapPin,
   Plane,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const slides = [
   {
@@ -70,6 +70,8 @@ const slides = [
 
 export function HeroSection() {
   const [current, setCurrent] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const goTo = useCallback((index: number) => {
     setCurrent(index);
@@ -82,11 +84,18 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const slide = slides[current];
+  const parallaxOffset = Math.min(scrollY * 0.35, 300);
 
   return (
-    <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-[#0c1410] text-white">
-      {/* Background slides */}
+    <section ref={sectionRef} className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-[#0c1410] text-white">
+      {/* Parallax background layers */}
       {slides.map((s, i) => (
         <Image
           key={s.image}
@@ -95,21 +104,31 @@ export function HeroSection() {
           fill
           priority={i === 0}
           sizes="100vw"
-          className={`absolute inset-0 object-cover object-center transition-opacity duration-[1100ms] ease-out ${
+          className={`absolute inset-0 object-cover object-center transition-opacity duration-[1100ms] ease-out will-change-transform ${
             i === current
-              ? "opacity-100 scale-[1.03] animate-[hero-drift_22s_ease-in-out_infinite_alternate]"
-              : "opacity-0 scale-100"
+              ? "opacity-100"
+              : "opacity-0"
           }`}
+          style={{
+            transform: i === current ? `translateY(${parallaxOffset * 0.15}px) scale(${1 + parallaxOffset * 0.0003})` : undefined,
+            transition: "opacity 1100ms ease-out",
+          }}
         />
       ))}
 
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/50" style={{ transform: `translateY(${-parallaxOffset * 0.05}px)` }} />
       <div className="absolute inset-0 bg-[linear-gradient(0deg,#000_0%,transparent_45%,transparent_75%,#000_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(168,133,74,0.12),transparent_55%)]" />
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(168,133,74,0.12),transparent_55%)]"
+        style={{ transform: `translateY(${-parallaxOffset * 0.08}px)` }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-5 pb-12 pt-20 sm:px-8 sm:pb-14 lg:px-14 lg:pb-16">
+      <div
+        className="relative z-10 w-full px-5 pb-12 pt-20 sm:px-8 sm:pb-14 lg:px-14 lg:pb-16"
+        style={{ transform: `translateY(${-parallaxOffset * 0.06}px)` }}
+      >
         <div className="mx-auto max-w-[1400px]">
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.42fr)] lg:gap-14">
             {/* Main copy */}
@@ -154,7 +173,7 @@ export function HeroSection() {
               key={`side-${current}`}
               className="hidden animate-[hero-rise_.65s_.2s_ease-out_forwards] opacity-0 lg:block"
             >
-              <div className="rounded-2xl border border-white/15 bg-black/40 p-5 shadow-lg">
+              <div className="rounded-2xl border border-white/15 bg-black/40 p-5 shadow-lg backdrop-blur-sm">
                 <p className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white/55">
                   <MapPin className="h-3 w-3 text-gold" />
                   Featured homecoming
@@ -183,7 +202,7 @@ export function HeroSection() {
 
           {/* Quick links strip */}
           <div className="mt-10 animate-[hero-rise_.7s_.28s_ease-out_forwards] opacity-0 sm:mt-12">
-            <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/35 shadow-lg sm:rounded-full">
+            <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/35 shadow-lg backdrop-blur-sm sm:rounded-full">
               <div className="grid grid-cols-1 sm:grid-cols-[1.15fr_1fr_1fr_auto]">
                 <Link
                   href="/flights"
@@ -265,6 +284,12 @@ export function HeroSection() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 animate-[scroll-indicator_2.5s_ease-in-out_infinite] flex-col items-center gap-2 opacity-40 transition-opacity hover:opacity-70 sm:flex">
+        <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white">Scroll</span>
+        <div className="h-8 w-[1px] bg-gradient-to-b from-white/60 to-transparent" />
       </div>
     </section>
   );
