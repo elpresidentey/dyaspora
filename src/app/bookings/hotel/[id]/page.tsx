@@ -31,11 +31,11 @@ const roomIcons: Record<string, typeof Crown> = {
 };
 
 const roomColors: Record<string, string> = {
-  "Standard Room": "bg-blue-100 text-blue-700 border-blue-200",
-  "Deluxe Room": "bg-indigo-100 text-indigo-700 border-indigo-200",
-  "Executive Suite": "bg-amber-100 text-amber-700 border-amber-200",
-  "VIP Suite": "bg-purple-100 text-purple-700 border-purple-200",
-  "Presidential Suite": "bg-rose-100 text-rose-700 border-rose-200",
+  "Standard Room": "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+  "Deluxe Room": "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800",
+  "Executive Suite": "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800",
+  "VIP Suite": "bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+  "Presidential Suite": "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800",
 };
 
 function HotelBookingPage() {
@@ -173,8 +173,8 @@ function HotelBookingPage() {
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold">{rt.name}</span>
-                            {rt.name === "VIP Suite" && <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-semibold text-purple-700">Popular</span>}
-                            {rt.name === "Presidential Suite" && <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-semibold text-rose-700">Best</span>}
+                            {rt.name === "VIP Suite" && <span className="rounded-full bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 text-[10px] font-semibold text-purple-700 dark:text-purple-300">Popular</span>}
+                            {rt.name === "Presidential Suite" && <span className="rounded-full bg-rose-100 dark:bg-rose-900/50 px-2 py-0.5 text-[10px] font-semibold text-rose-700 dark:text-rose-300">Best</span>}
                           </div>
                           <p className="mt-0.5 text-sm text-muted-foreground line-clamp-2">{rt.description}</p>
                           <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">

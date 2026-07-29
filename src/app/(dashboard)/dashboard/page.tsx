@@ -154,10 +154,10 @@ export default function DashboardPage() {
     return <MapPin className="w-5 h-5" />;
   };
   const getTripIconBg = (b: Booking) => {
-    if (isCombined(b)) return "bg-indigo-100 text-indigo-600";
-    if (b.flightBooking) return "bg-blue-100 text-blue-600";
-    if (b.hotelBooking) return "bg-purple-100 text-purple-600";
-    return "bg-orange-100 text-orange-600";
+    if (isCombined(b)) return "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300";
+    if (b.flightBooking) return "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300";
+    if (b.hotelBooking) return "bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300";
+    return "bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-300";
   };
 
   const confirmedBookings = bookings.filter((b) => b.status === "CONFIRMED");
@@ -211,7 +211,7 @@ export default function DashboardPage() {
                       </div>
                       <div className="space-y-4 p-5">
                         {booking.flightBooking && (
-                          <div className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm">
+                          <div className="rounded-xl border border-blue-100 dark:border-blue-900 bg-card p-4 shadow-sm">
                             <div className="flex items-start gap-3">
                               <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-sm">
                                 <Plane className="h-5 w-5" />
@@ -221,19 +221,19 @@ export default function DashboardPage() {
                                   {booking.flightBooking.flight.origin} → {booking.flightBooking.flight.destination}
                                 </div>
                                 <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-                                  <Plane className="h-3 w-3 shrink-0 text-blue-400" />
+                                  <Plane className="h-3 w-3 shrink-0 text-blue-400 dark:text-blue-300" />
                                   <span>{booking.flightBooking.flight.airline} &middot; {booking.flightBooking.flight.flightNumber}</span>
                                 </div>
                               </div>
                             </div>
-                            <div className="mt-3 grid grid-cols-2 gap-3 rounded-lg bg-blue-50/60 p-3">
+                            <div className="mt-3 grid grid-cols-2 gap-3 rounded-lg bg-blue-50/60 dark:bg-blue-900/30 p-3">
                               <div>
-                                <div className="text-[10px] font-medium uppercase tracking-wider text-blue-500">Departure</div>
+                                <div className="text-[10px] font-medium uppercase tracking-wider text-blue-500 dark:text-blue-300">Departure</div>
                                 <div className="mt-0.5 text-sm font-semibold text-foreground">{formatDate(booking.flightBooking.flight.departureTime)}</div>
                                 <div className="text-xs text-muted-foreground">{formatTime(booking.flightBooking.flight.departureTime)}</div>
                               </div>
                               <div>
-                                <div className="text-[10px] font-medium uppercase tracking-wider text-blue-500">Arrival</div>
+                                <div className="text-[10px] font-medium uppercase tracking-wider text-blue-500 dark:text-blue-300">Arrival</div>
                                 <div className="mt-0.5 text-sm font-semibold text-foreground">{formatDate(booking.flightBooking.flight.arrivalTime)}</div>
                                 <div className="text-xs text-muted-foreground">{formatTime(booking.flightBooking.flight.arrivalTime)}</div>
                               </div>
@@ -244,7 +244,7 @@ export default function DashboardPage() {
                           </div>
                         )}
                         {booking.hotelBooking && (
-                          <div className="rounded-xl border border-purple-100 bg-white p-4 shadow-sm">
+                          <div className="rounded-xl border border-purple-100 dark:border-purple-900 bg-card p-4 shadow-sm">
                             <div className="flex items-start gap-3">
                               <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-sm">
                                 <Building2 className="h-5 w-5" />
@@ -252,18 +252,18 @@ export default function DashboardPage() {
                               <div className="min-w-0 flex-1">
                                 <div className="text-base font-semibold text-foreground">{booking.hotelBooking.hotel.name}</div>
                                 <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-                                  <MapPin className="h-3 w-3 shrink-0 text-purple-400" />
+                                  <MapPin className="h-3 w-3 shrink-0 text-purple-400 dark:text-purple-300" />
                                   <span className="truncate">{booking.hotelBooking.hotel.city}</span>
                                 </div>
                               </div>
                             </div>
-                            <div className="mt-3 grid grid-cols-2 gap-3 rounded-lg bg-purple-50/60 p-3">
+                            <div className="mt-3 grid grid-cols-2 gap-3 rounded-lg bg-purple-50/60 dark:bg-purple-900/30 p-3">
                               <div>
-                                <div className="text-[10px] font-medium uppercase tracking-wider text-purple-500">Check in</div>
+                                <div className="text-[10px] font-medium uppercase tracking-wider text-purple-500 dark:text-purple-300">Check in</div>
                                 <div className="mt-0.5 text-sm font-semibold text-foreground">{formatDate(booking.hotelBooking.checkIn)}</div>
                               </div>
                               <div>
-                                <div className="text-[10px] font-medium uppercase tracking-wider text-purple-500">Check out</div>
+                                <div className="text-[10px] font-medium uppercase tracking-wider text-purple-500 dark:text-purple-300">Check out</div>
                                 <div className="mt-0.5 text-sm font-semibold text-foreground">{formatDate(booking.hotelBooking.checkOut)}</div>
                               </div>
                             </div>

@@ -197,16 +197,16 @@ export default function HotelsPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {visibleHotels.map((hotel) => (
-                  <Card key={hotel.id} className="group relative overflow-hidden rounded-2xl bg-white p-0 ring-0 shadow-sm transition-all duration-300 hover:shadow-lg">
+                  <Card key={hotel.id} className="group relative overflow-hidden rounded-2xl bg-card p-0 ring-0 shadow-sm transition-all duration-300 hover:shadow-lg">
                     <div className="relative h-48 overflow-hidden">
                       <Image src={imageFor(hotel)} alt={`${hotel.name} in ${hotel.city}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <div className="absolute top-3 right-3 bg-white/90 text-foreground backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                      <div className="absolute top-3 right-3 bg-background/80 text-foreground backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
                         <Star className="w-3.5 h-3.5 text-gold fill-gold" />
                         <span className="text-xs font-bold">{hotel.rating}</span>
                       </div>
-                      <button type="button" aria-label={`Save ${hotel.name}`} onClick={() => setSaved((items) => items.includes(hotel.id) ? items.filter((item) => item !== hotel.id) : [...items, hotel.id])} className="absolute left-3 top-3 grid h-8 w-8 place-items-center rounded-lg bg-white/90 text-brand shadow-sm transition-colors hover:bg-white"><Heart className={`h-4 w-4 ${saved.includes(hotel.id) ? "fill-gold text-gold" : ""}`} /></button>
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm">
+                      <button type="button" aria-label={`Save ${hotel.name}`} onClick={() => setSaved((items) => items.includes(hotel.id) ? items.filter((item) => item !== hotel.id) : [...items, hotel.id])} className="absolute left-3 top-3 grid h-8 w-8 place-items-center rounded-lg bg-background/80 text-foreground shadow-sm transition-colors hover:bg-background"><Heart className={`h-4 w-4 ${saved.includes(hotel.id) ? "fill-gold text-gold" : ""}`} /></button>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-lg bg-background/80 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm">
                         <MapPin className="w-3 h-3 text-gold" />
                         {hotel.city}
                       </div>
