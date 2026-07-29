@@ -2,8 +2,8 @@
 
 import { Logo } from "@/components/brand/logo";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard, CloudSun } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard, CloudSun, ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import { useUser } from "@/components/auth/auth-context";
@@ -75,6 +75,7 @@ function MoreDropdown() {
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, loading } = useUser();
   const [scrolled, setScrolled] = useState(false);
 
@@ -92,7 +93,13 @@ export function Header() {
         : "border-b border-transparent bg-background/60 backdrop-blur-sm"
     }`}>
       <div className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between px-6 sm:px-10 lg:px-16">
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-3 sm:gap-10">
+          {pathname !== "/" && (
+            <button onClick={() => router.back()} className="hidden shrink-0 items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground sm:flex" title="Go back">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden lg:inline">Back</span>
+            </button>
+          )}
           <Logo />
           <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary navigation">
             {navItems.map(({ label, href, icon: Icon }) => {

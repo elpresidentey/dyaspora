@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/components/auth/auth-context";
 import { StripeCheckout } from "@/components/payment/stripe-checkout";
-import { Plane, Building2, Calendar, Lock, Plus, Check, MapPin } from "lucide-react";
+import { ArrowLeft, Plane, Building2, Calendar, Lock, Plus, Check, MapPin } from "lucide-react";
 
 type Hotel = {
   id: string; name: string; city: string; country: string;
@@ -118,6 +118,11 @@ function BookingForm() {
   if (confirmed) {
     return (
       <div className="min-h-screen bg-secondary/30">
+        <div className="container pt-8">
+          <button onClick={() => router.back()} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="h-4 w-4" /> Back
+          </button>
+        </div>
         <div className="container py-20 text-center">
           <div className="mx-auto max-w-md">
             <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-green-100">
@@ -139,6 +144,9 @@ function BookingForm() {
     <div className="min-h-screen bg-secondary/30">
       <div className="border-b bg-background">
         <div className="container py-8">
+          <button onClick={() => router.back()} className="mb-3 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="h-4 w-4" /> Back to flights
+          </button>
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight">Book Your Flight</h1>
         </div>
       </div>

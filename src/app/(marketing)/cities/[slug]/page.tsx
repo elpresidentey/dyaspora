@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Building2, CalendarDays, UtensilsCrossed, Compass, Bus, ArrowRight } from "lucide-react";
+import { MapPin, Building2, CalendarDays, UtensilsCrossed, Compass, Bus, ArrowRight, ArrowLeft } from "lucide-react";
 import { destinations } from "@/data/destinations";
 import { restaurants } from "@/data/restaurants";
 import { tours } from "@/data/tours";
@@ -30,7 +30,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16">
           <div className="mx-auto max-w-[1440px]">
-            <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[.2em] text-gold"><MapPin className="h-4 w-4" />{city.country}</div>
+            <Link href="/cities" className="mb-4 inline-flex items-center gap-1.5 text-xs font-medium text-white/70 hover:text-white transition-colors">
+            <ArrowLeft className="h-3 w-3" /> Back to cities
+          </Link>
+          <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[.2em] text-gold"><MapPin className="h-4 w-4" />{city.country}</div>
             <h1 className="mt-3 font-serif text-5xl font-bold text-white md:text-7xl">{city.city}</h1>
             <p className="mt-3 max-w-xl text-lg text-white/70">{city.tag}</p>
           </div>
