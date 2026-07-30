@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowUpRight, Building2, CalendarDays, Compass, Globe, ShieldCheck, HeartPulse, ChevronDown, House, Plane, LayoutDashboard, CloudSun, ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { siteConfig } from "@/config/site";
 import { useUser } from "@/components/auth/auth-context";
 import { useTheme } from "@/components/theme-provider";
 import { MobileNav } from "./mobile-nav";
@@ -107,9 +106,8 @@ export function Header() {
             {navItems.map(({ label, href, icon: Icon }) => {
               const isActive = pathname === href || pathname.startsWith(href + "/");
               return (
-                <div className="group/link">
+                <div key={href} className="group/link">
                   <Link
-                    key={href}
                     href={href}
                     className={`relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
                       isActive

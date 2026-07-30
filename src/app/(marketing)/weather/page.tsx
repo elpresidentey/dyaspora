@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CloudSun, Sun, Cloud, CloudRain, CloudLightning, Snowflake, CloudHail, Thermometer, Droplets, Wind, MapPin, TriangleAlert } from "lucide-react";
+import { CloudSun, Sun, Cloud, CloudRain, CloudLightning, Snowflake, Thermometer, Droplets, Wind, MapPin, TriangleAlert } from "lucide-react";
 import { destinations } from "@/data/destinations";
-import { cityCoordinates } from "@/data/coordinates";
 
 type WeatherData = {
   slug: string;

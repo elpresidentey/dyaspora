@@ -220,6 +220,8 @@ export default function FlightsPage() {
                     <span className="capitalize">{flight.cabinClass}</span>
                     <span className="text-border">|</span>
                     <span>{flight.availableSeats} seat{flight.availableSeats !== 1 ? "s" : ""} left</span>
+                    <span className="text-border">|</span>
+                    <Link href={`/accommodation?city=${encodeURIComponent(arrCity)}`} className="text-gold hover:underline">Hotels in {cap(arrCity)}</Link>
                   </div>
                 </div>
                 );

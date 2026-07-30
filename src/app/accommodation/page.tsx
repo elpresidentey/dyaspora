@@ -69,12 +69,13 @@ export default function HotelsPage() {
       setHotels(data.hotels || []);
     } catch (error) {
       console.error("Search error:", error);
+      setError(error instanceof Error ? error.message : "Search failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const visibleHotels = [...hotels].sort((a, b) => sort === "price" ? a.pricePerNight - b.pricePerNight : sort === "rating" ? b.rating - a.rating : b.rating - a.rating);
+  const visibleHotels = [...hotels].sort((a, b) => sort === "price" ? a.pricePerNight - b.pricePerNight : sort === "rating" ? b.rating - a.rating : b.rating * 2 + (1000 / (b.pricePerNight || 1)) - (a.rating * 2 + (1000 / (a.pricePerNight || 1))));
   const imageFor = (hotel: Hotel) => {
     if (hotel.images && hotel.images.startsWith("/images/")) return hotel.images;
     return "/images/Lagos.jpg";

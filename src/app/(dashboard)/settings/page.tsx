@@ -8,7 +8,7 @@ import { Bell, Globe, Lock, Moon, Sun, Check } from "lucide-react";
 
 export default function SettingsPage() {
   const { user, loading } = useUser();
-  const { theme, toggle } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -92,10 +92,10 @@ export default function SettingsPage() {
           <h2 className="mt-3 font-medium text-foreground">Appearance</h2>
           <p className="mt-1 text-sm text-muted-foreground">Toggle between light and dark mode.</p>
           <div className="mt-4 flex items-center gap-3">
-            <button onClick={toggle} className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all ${theme === "light" ? "border-gold bg-gold/5 text-gold" : "border-border text-muted-foreground hover:bg-muted"}`}>
+            <button onClick={() => setTheme("light")} className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all ${theme === "light" ? "border-gold bg-gold/5 text-gold" : "border-border text-muted-foreground hover:bg-muted"}`}>
               <Sun className="h-4 w-4" /> Light
             </button>
-            <button onClick={toggle} className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all ${theme === "dark" ? "border-gold bg-gold/5 text-gold" : "border-border text-muted-foreground hover:bg-muted"}`}>
+            <button onClick={() => setTheme("dark")} className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all ${theme === "dark" ? "border-gold bg-gold/5 text-gold" : "border-border text-muted-foreground hover:bg-muted"}`}>
               <Moon className="h-4 w-4" /> Dark
             </button>
           </div>

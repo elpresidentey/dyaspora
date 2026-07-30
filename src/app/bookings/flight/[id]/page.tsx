@@ -46,7 +46,7 @@ function BookingForm() {
 
   useEffect(() => {
     if (!destinationCity) return;
-    fetch(`/api/accommodation/search?city=${encodeURIComponent(destinationCity)}&checkIn=&checkOut=`)
+    fetch(`/api/hotels/search?city=${encodeURIComponent(destinationCity)}`)
       .then((r) => r.json())
       .then((d) => { if (d.hotels) setHotels(d.hotels.slice(0, 4)); })
       .catch(() => {})

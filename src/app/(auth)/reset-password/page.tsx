@@ -2,11 +2,10 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 function ResetForm() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const token = searchParams.get("token") || "";
   const email = searchParams.get("email") || "";
 
@@ -14,6 +13,7 @@ function ResetForm() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,6 +28,7 @@ function ResetForm() {
       return;
     }
 
+    setSaving(true);
     try {
       const res = await fetch("/api/auth/reset-password", {
         method: "POST",
@@ -39,6 +40,8 @@ function ResetForm() {
       setSuccess(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -84,7 +87,7 @@ function ResetForm() {
           <input id="confirm" type="password" value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Repeat your password" required className="w-full rounded-lg border bg-secondary/50 px-4 py-3 text-sm focus:border-gold focus:outline-none" />
         </div>
         {error && <p className="text-xs text-destructive">{error}</p>}
-        <button type="submit" className="w-full rounded-lg bg-brand px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand/90">Reset password</button>
+        <button type="submit" disabled={saving} className="w-full rounded-lg bg-brand px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand/90 disabled:opacity-50">{saving ? "Resetting..." : "Reset password"}</button>
       </form>
 
       <p className="mt-8 text-center text-sm text-muted-foreground">
