@@ -39,7 +39,7 @@ const roomColors: Record<string, string> = {
 };
 
 function HotelBookingPage() {
-  const { user } = useUser();
+  const { user, loading: authLoading } = useUser();
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -85,13 +85,18 @@ function HotelBookingPage() {
 
   async function reserve() {
     setError("");
+    if (authLoading) return;
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent(`/bookings/hotel/${id}?${searchParams.toString()}`)}`);
+      return;
+    }
     if (!checkIn || !checkOut || nights < 1) return setError("Choose a valid check-in and check-out date.");
     setSubmitting(true);
     try {
       const response = await fetch("/api/bookings", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user?.id || "demo-user", type: "hotel", itemId: id, total, currency: "USD",
+          userId: user.id, type: "hotel", itemId: id, total, currency: "USD",
           checkIn, checkOut, guests: Number(guests), rooms: Number(rooms),
           roomTypeName: selectedRoomType?.name,
           roomTypePrice: selectedRoomType?.price,
@@ -244,6 +249,8 @@ function HotelBookingPage() {
           {error && <p className="text-sm text-destructive">{error}</p>}
           {showPayment && bookingId ? (
             <StripeCheckout bookingId={bookingId} amount={total} onSuccess={() => setConfirmed(true)} />
+          ) : !user ? (
+            <Button asChild className="h-12 w-full bg-gold text-white hover:bg-gold/90"><Link href={`/login?redirect=${encodeURIComponent(`/bookings/hotel/${id}?${searchParams.toString()}`)}`}>Sign in to reserve</Link></Button>
           ) : (
             <Button onClick={reserve} disabled={submitting} className="h-12 w-full bg-gold text-white hover:bg-gold/90">{submitting ? "Reserving…" : "Reserve this stay"}</Button>
           )}

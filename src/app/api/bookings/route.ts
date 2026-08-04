@@ -5,7 +5,7 @@ import { mockHotels } from "@/data/hotels";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 const bookingSchema = z.object({
-  userId: z.string().default("demo-user"),
+  userId: z.string().min(1, "User ID is required"),
   type: z.enum(["flight", "hotel", "event", "combined"]),
   itemId: z.string(),
   total: z.number(),
@@ -44,22 +44,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validatedData = bookingSchema.parse(body);
 
-    let userId = validatedData.userId;
-    if (userId === "demo-user") {
-      const demoUser = await prisma.user.upsert({
-        where: { email: "demo@dyaspora.com" },
-        update: {},
-        create: { email: "demo@dyaspora.com", name: "Demo Traveler", password: "prototype" },
-      });
-      userId = demoUser.id;
-    } else {
-      const existingUser = await prisma.user.findUnique({ where: { id: userId } });
-      if (!existingUser) {
-        const { data: authUser } = await supabaseAdmin.auth.admin.getUserById(userId);
-        if (!authUser.user?.email) return NextResponse.json({ error: "Authenticated profile not found" }, { status: 401 });
-        await prisma.user.create({ data: { id: userId, email: authUser.user.email, name: authUser.user.user_metadata?.full_name || authUser.user.email.split("@")[0], password: "supabase-managed" } });
-      }
+    const existingUser = await prisma.user.findUnique({ where: { id: validatedData.userId } });
+    if (!existingUser) {
+      const { data: authUser } = await supabaseAdmin.auth.admin.getUserById(validatedData.userId);
+      if (!authUser.user?.email) return NextResponse.json({ error: "Authenticated profile not found" }, { status: 401 });
+      await prisma.user.create({ data: { id: validatedData.userId, email: authUser.user.email, name: authUser.user.user_metadata?.full_name || authUser.user.email.split("@")[0], password: "supabase-managed" } });
     }
+    const userId = validatedData.userId;
 
     const booking = await prisma.booking.create({
       data: {
@@ -192,6 +183,10 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
+      const missingUserId = error.issues.some((issue) => issue.path.includes("userId"));
+      if (missingUserId) {
+        return NextResponse.json({ error: "You must be logged in to make a booking" }, { status: 401 });
+      }
       return NextResponse.json(
         { error: "Validation error", details: error.issues },
         { status: 400 }

@@ -15,7 +15,7 @@ type Hotel = {
 };
 
 function BookingForm() {
-  const { user } = useUser();
+  const { user, loading: authLoading } = useUser();
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -62,14 +62,15 @@ function BookingForm() {
   const total = price * passengers + hotelTotal;
 
   const handleBookNow = async () => {
-    setShowPayment(true);
-    setLoading(true);
-
     try {
+      if (authLoading) return;
       if (!user) {
-        router.push("/login");
+        router.push(`/login?redirect=${encodeURIComponent(`/bookings/flight/${params.id}?${searchParams.toString()}`)}`);
         return;
       }
+
+      setShowPayment(true);
+      setLoading(true);
 
       const bookingResponse = await fetch("/api/bookings", {
         method: "POST",
@@ -296,7 +297,7 @@ function BookingForm() {
                   </div>
                 )}
                 <Button onClick={handleBookNow} className="w-full bg-gold hover:bg-gold/90 text-white h-12" disabled={!airline}>
-                  Proceed to Payment
+                  {user ? "Proceed to Payment" : "Sign in to book"}
                 </Button>
               </div>
             ) : bookingId ? (
