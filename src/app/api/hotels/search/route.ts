@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mockHotels } from "@/data/hotels";
 
-export { mockHotels };
-
 const roomTypeTemplates = [
   { name: "Standard Room", desc: "Comfortable room with essential amenities", capacity: 2, priceFactor: 0.7, amenities: "WiFi, TV, Mini Bar, Air Conditioning" },
   { name: "Deluxe Room", desc: "Spacious room with premium furnishings and city views", capacity: 2, priceFactor: 1.0, amenities: "WiFi, TV, Mini Bar, Air Conditioning, City View, Bathrobe" },
